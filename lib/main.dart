@@ -2,6 +2,8 @@
 
 import 'package:flutter/material.dart';
 
+import './transaction.dart';
+
 void main() => runApp(const MyApp());
 
 class MyApp extends StatelessWidget {
@@ -9,7 +11,7 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(context) {
-    return const MaterialApp(
+    return MaterialApp(
       title: 'Flutter Expense Manager',
       home: MyHomePage(),
     );
@@ -17,7 +19,22 @@ class MyApp extends StatelessWidget {
 }
 
 class MyHomePage extends StatelessWidget {
-  const MyHomePage({Key? key}) : super(key: key);
+  MyHomePage({Key? key}) : super(key: key);
+
+  final List<Transaction> transactions = [
+    Transaction(
+      id: 'A1',
+      title: 'Food Order',
+      amount: 5,
+      date: DateTime.now(),
+    ),
+    Transaction(
+      id: 'A2',
+      title: 'Laptop Stand',
+      amount: 15,
+      date: DateTime.now(),
+    ),
+  ];
 
   @override
   Widget build(context) {
@@ -27,8 +44,10 @@ class MyHomePage extends StatelessWidget {
       ),
       body: Column(
         children: <Widget>[
+          SizedBox(height: 10),
           Card(
-            color: Colors.blue,
+            color: Color.fromARGB(255, 45, 188, 255),
+            elevation: 5,
             child: SizedBox(
               height: 100,
               width: double.infinity,
@@ -45,11 +64,13 @@ class MyHomePage extends StatelessWidget {
               ),
             ),
           ),
+          SizedBox(height: 10),
           SizedBox(
             height: 200,
             width: double.infinity,
             child: Card(
-              color: Colors.blueAccent,
+              color: Color.fromARGB(255, 49, 216, 57),
+              elevation: 5,
               child: Center(
                 child: Text(
                   'List Of Transactions',
