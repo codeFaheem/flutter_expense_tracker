@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_const_literals_to_create_immutables, prefer_const_constructors
 
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 import './transaction.dart';
 
@@ -25,13 +26,13 @@ class MyHomePage extends StatelessWidget {
     Transaction(
       id: 'A1',
       title: 'Food Order',
-      amount: 5,
+      amount: 10.01,
       date: DateTime.now(),
     ),
     Transaction(
       id: 'A2',
       title: 'Laptop Stand',
-      amount: 15,
+      amount: 24.99,
       date: DateTime.now(),
     ),
   ];
@@ -65,24 +66,54 @@ class MyHomePage extends StatelessWidget {
             ),
           ),
           SizedBox(height: 10),
-          SizedBox(
-            height: 200,
-            width: double.infinity,
-            child: Card(
-              color: Color.fromARGB(255, 49, 216, 57),
-              elevation: 5,
-              child: Center(
-                child: Text(
-                  'List Of Transactions',
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold,
-                  ),
-                  textAlign: TextAlign.center,
+          Column(
+            children: transactions.map((tx) {
+              return Card(
+                child: Row(
+                  children: [
+                    Container(
+                      margin: EdgeInsets.symmetric(
+                        vertical: 10,
+                        horizontal: 15,
+                      ),
+                      decoration: BoxDecoration(
+                        border: Border.all(
+                          color: Colors.purple,
+                          width: 2,
+                        ),
+                      ),
+                      padding: EdgeInsets.all(10),
+                      child: Text(
+                        '\$${tx.amount}',
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 20,
+                          color: Colors.purple,
+                        ),
+                      ),
+                    ),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          tx.title,
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 16,
+                          ),
+                        ),
+                        Text(
+                          DateFormat.yMMMMEEEEd().format(tx.date),
+                          style: TextStyle(
+                            color: Colors.grey,
+                          ),
+                        )
+                      ],
+                    ),
+                  ],
                 ),
-              ),
-            ),
+              );
+            }).toList(),
           ),
         ],
       ),
