@@ -1,13 +1,19 @@
-// ignore_for_file: prefer_const_constructors
+// ignore_for_file: prefer_const_constructors, prefer_const_constructors_in_immutables
 
 import 'package:flutter/material.dart';
 
-class NewTransaction extends StatelessWidget {
+class NewTransaction extends StatefulWidget {
   final Function addTx;
-  final titleController = TextEditingController();
-  final amountController = TextEditingController();
 
   NewTransaction(this.addTx, {Key? key}) : super(key: key);
+
+  @override
+  State<NewTransaction> createState() => _NewTransactionState();
+}
+
+class _NewTransactionState extends State<NewTransaction> {
+  final titleController = TextEditingController();
+  final amountController = TextEditingController();
 
   void _submitData() {
     final String enteredTitle = titleController.text;
@@ -15,10 +21,12 @@ class NewTransaction extends StatelessWidget {
 
     if (enteredTitle.isEmpty || enteredAmount <= 0) return;
 
-    addTx(
+    widget.addTx(
       titleController.text,
       double.parse(amountController.text),
     );
+
+    Navigator.of(context).pop();
   }
 
   @override
@@ -42,7 +50,8 @@ class NewTransaction extends StatelessWidget {
             ),
             TextButton(
               child: Text('Add Transaction'),
-              style: TextButton.styleFrom(primary: Colors.purple),
+              style:
+                  TextButton.styleFrom(primary: Theme.of(context).primaryColor),
               onPressed: _submitData,
             ),
           ],
