@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import './models/transaction.dart';
 import './widgets/transaction_list.dart';
 import './widgets/new_transaction.dart';
+import './widgets/chart.dart';
 
 void main() => runApp(const MyApp());
 
@@ -51,25 +52,33 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   final List<Transaction> _transactions = [
-    Transaction(
-      id: 'A1',
-      title: 'Food Order',
-      amount: 10,
-      date: DateTime.now(),
-    ),
-    Transaction(
-      id: 'A2',
-      title: 'Laptop Stand',
-      amount: 24.99,
-      date: DateTime.now(),
-    ),
-    Transaction(
-      id: 'A3',
-      title: 'Education',
-      amount: 19.99,
-      date: DateTime.now(),
-    ),
+    // Transaction(
+    //   id: 'A1',
+    //   title: 'Food Order',
+    //   amount: 10,
+    //   date: DateTime.now(),
+    // ),
+    // Transaction(
+    //   id: 'A2',
+    //   title: 'Laptop Stand',
+    //   amount: 24.99,
+    //   date: DateTime.now(),
+    // ),
+    // Transaction(
+    //   id: 'A3',
+    //   title: 'Education',
+    //   amount: 19.99,
+    //   date: DateTime.now(),
+    // ),
   ];
+
+  List<Transaction> get _recentTransactions {
+    return _transactions.where((tx) {
+      return tx.date.isAfter(
+        DateTime.now().subtract(Duration(days: 7)),
+      );
+    }).toList();
+  }
 
   void _addNewTransactions(String txTitle, double txAmount) {
     final newTx = Transaction(
@@ -108,27 +117,7 @@ class _MyHomePageState extends State<MyHomePage> {
       body: SingleChildScrollView(
         child: Column(
           children: <Widget>[
-            SizedBox(height: 10),
-            Card(
-              color: Color.fromARGB(255, 45, 188, 255),
-              elevation: 5,
-              child: SizedBox(
-                height: 100,
-                width: double.infinity,
-                child: Center(
-                  child: Text(
-                    'Chart',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold,
-                    ),
-                    textAlign: TextAlign.center,
-                  ),
-                ),
-              ),
-            ),
-            SizedBox(height: 10),
+            Chart(_recentTransactions),
             TransactionList(_transactions),
           ],
         ),
