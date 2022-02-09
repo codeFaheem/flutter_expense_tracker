@@ -52,24 +52,24 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   final List<Transaction> _transactions = [
-    // Transaction(
-    //   id: 'A1',
-    //   title: 'Food Order',
-    //   amount: 10,
-    //   date: DateTime.now(),
-    // ),
-    // Transaction(
-    //   id: 'A2',
-    //   title: 'Laptop Stand',
-    //   amount: 24.99,
-    //   date: DateTime.now(),
-    // ),
-    // Transaction(
-    //   id: 'A3',
-    //   title: 'Education',
-    //   amount: 19.99,
-    //   date: DateTime.now(),
-    // ),
+    Transaction(
+      id: 'A1',
+      title: 'Food Order',
+      amount: 10,
+      date: DateTime.now().subtract(Duration(days: 1)),
+    ),
+    Transaction(
+      id: 'A2',
+      title: 'Laptop Stand',
+      amount: 24.99,
+      date: DateTime.now().subtract(Duration(days: 3)),
+    ),
+    Transaction(
+      id: 'A3',
+      title: 'Education',
+      amount: 19.99,
+      date: DateTime.now().subtract(Duration(days: 4)),
+    ),
   ];
 
   List<Transaction> get _recentTransactions {
@@ -80,12 +80,12 @@ class _MyHomePageState extends State<MyHomePage> {
     }).toList();
   }
 
-  void _addNewTransactions(String txTitle, double txAmount) {
+  void _addNewTransactions(String txTitle, double txAmount, DateTime txDate) {
     final newTx = Transaction(
       id: DateTime.now().toString(),
       title: txTitle,
       amount: txAmount,
-      date: DateTime.now(),
+      date: txDate,
     );
 
     setState(() {
@@ -100,6 +100,12 @@ class _MyHomePageState extends State<MyHomePage> {
         return NewTransaction(_addNewTransactions);
       },
     );
+  }
+
+  void _deleteTransaction(String id) {
+    setState(() {
+      _transactions.removeWhere((tx) => tx.id == id);
+    });
   }
 
   @override
@@ -118,7 +124,7 @@ class _MyHomePageState extends State<MyHomePage> {
         child: Column(
           children: <Widget>[
             Chart(_recentTransactions),
-            TransactionList(_transactions),
+            TransactionList(_transactions, _deleteTransaction),
           ],
         ),
       ),
