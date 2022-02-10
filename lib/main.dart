@@ -174,8 +174,8 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(context) {
-    final bool _isLandscape =
-        MediaQuery.of(context).orientation == Orientation.landscape;
+    final MediaQueryData mediaQuery = MediaQuery.of(context);
+    final bool _isLandscape = mediaQuery.orientation == Orientation.landscape;
 
     PreferredSizeWidget appBar = AppBar(
       title: const Text('Expense Manager'),
@@ -187,9 +187,9 @@ class _MyHomePageState extends State<MyHomePage> {
       ],
     );
     final txListWidget = SizedBox(
-      height: (MediaQuery.of(context).size.height -
+      height: (mediaQuery.size.height -
               appBar.preferredSize.height -
-              MediaQuery.of(context).padding.top) *
+              mediaQuery.padding.top) *
           (_isLandscape ? 0.9 : 0.7),
       child: TransactionList(_transactions, _deleteTransaction),
     );
@@ -201,9 +201,9 @@ class _MyHomePageState extends State<MyHomePage> {
           children: <Widget>[
             if (_isLandscape)
               SizedBox(
-                height: (MediaQuery.of(context).size.height -
+                height: (mediaQuery.size.height -
                         appBar.preferredSize.height -
-                        MediaQuery.of(context).padding.top) *
+                        mediaQuery.padding.top) *
                     0.1,
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -221,9 +221,9 @@ class _MyHomePageState extends State<MyHomePage> {
               ),
             if (!_isLandscape)
               SizedBox(
-                height: (MediaQuery.of(context).size.height -
+                height: (mediaQuery.size.height -
                         appBar.preferredSize.height -
-                        MediaQuery.of(context).padding.top) *
+                        mediaQuery.padding.top) *
                     0.3,
                 child: Chart(_recentTransactions),
               ),
@@ -231,9 +231,9 @@ class _MyHomePageState extends State<MyHomePage> {
             if (_isLandscape)
               _showChart
                   ? SizedBox(
-                      height: (MediaQuery.of(context).size.height -
+                      height: (mediaQuery.size.height -
                               appBar.preferredSize.height -
-                              MediaQuery.of(context).padding.top) *
+                              mediaQuery.padding.top) *
                           0.9,
                       child: Chart(_recentTransactions),
                     )
