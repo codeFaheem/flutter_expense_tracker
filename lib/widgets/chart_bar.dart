@@ -15,6 +15,7 @@ class ChartBar extends StatelessWidget {
   Widget build(BuildContext context) {
     return LayoutBuilder(builder: ((context, constraints) {
       return Column(
+        mainAxisSize: MainAxisSize.min,
         children: [
           SizedBox(
             height: constraints.maxHeight * 0.15,
